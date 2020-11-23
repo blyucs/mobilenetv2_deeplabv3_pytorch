@@ -14,7 +14,7 @@ from __future__ import print_function, division
 import os
 
 import numpy as np
-import scipy.io
+# import scipy.io
 import torch.utils.data as data
 from PIL import Image
 from data import data_config

@@ -59,7 +59,7 @@ parser.add_argument('--decayType', default='step')
 parser.add_argument('--nEpochs', type=int, default=100, help='number of epochs to train')
 parser.add_argument('--save_epoch', type=int, default=1, help='number of epochs to save model')
 
-parser.add_argument("--dataset_type", type=str, default='helen',# 'celebA',#, #'celebA-face',#'EG1800',#'celebA-binary',
+parser.add_argument("--dataset_type", type=str, default='EG1800',#'celebA-binary',
                     help="dataset type to be trained or valued.")
 parser.add_argument("--meta-train-prct", type=int, default=META_TRAIN_PRCT,
                     help="Percentage of examples for meta-training set.")
@@ -88,7 +88,7 @@ parser.add_argument("--val-crop-size", type=int, default=VAL_CROP_SIZE,
 args = parser.parse_args()
 
 
-os.environ["CUDA_VISIBLE_DEVICES"]="1"
+os.environ["CUDA_VISIBLE_DEVICES"]="2"
 
 # Multi-GPUs
 if args.without_gpu:
@@ -106,7 +106,7 @@ else:
 # Network 
 #---------------
 
-net = deeplab_v3_plus.DeepLabv_v3_plus_mv2_os_32(nInputChannels=3, n_classes=11)
+net = deeplab_v3_plus.DeepLabv_v3_plus_mv2_os_32(nInputChannels=3, n_classes=NUM_CLASSES[args.dataset_type][0])
 # net = deeplab_v3_plus.DeepLabv_v3_plus_mv2_os_8(nInputChannels=3, n_classes=21)
 # net = deeplab_v3_plus.DeepLabv_v3_plus_mv2_os_8(nInputChannels=3, n_classes=11)
 

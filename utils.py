@@ -11,7 +11,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import pdb
-
+import datetime
 def set_lr(args, epoch):
 
 	lrDecay = args.lrDecay
@@ -57,19 +57,24 @@ class saveData():
 		else:
 			self.logFile = open(self.save_dir + '/log.txt', 'w')
 			
-	def save_model(self, model):
-	    torch.save(
-	        model.state_dict(),
-	        self.save_dir_model + '/model_lastest.pt')
-	    torch.save(
-	        model,
-	        self.save_dir_model + '/model_obj.pt')
+	def save_model(self, model, args):
+
+		# now = datetime.datetime.now()
+
+		torch.save(
+				model.state_dict(),
+				# self.save_dir_model + "_{:%Y%m%dT%H%M}".format(now) + '{}.pt'.format(args.dataset_type))
+				self.save_dir_model +  '{}.pt'.format(args.dataset_type))
+		torch.save(
+			model,
+			# self.save_dir_model + "_{:%Y%m%dT%H%M}".format(now) +'{}model_obj.pt'.format(args.dataset_type))
+			self.save_dir_model + '{}model_obj.pt'.format(args.dataset_type))
 
 	def save_log(self, log):
 		self.logFile.write(log + '\n')
 
-	def load_model(self, model):
-		model.load_state_dict(torch.load(self.save_dir_model + '/model_lastest.pt'))
+	def load_model(self, model, path):
+		model.load_state_dict(torch.load(path))
 		print("load mode_status frmo {}/model_lastest.pt".format(self.save_dir_model))
 		return model
 
